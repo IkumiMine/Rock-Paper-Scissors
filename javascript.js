@@ -4,12 +4,6 @@ function getComputerChoice() {
     return computerChoices[Math.floor(Math.random() * computerChoices.length)];
 }
 
-//get player's choice
-function getPlayerChoice() {
-    const playerSelection = prompt("rock, paper, scissors go!").toLocaleLowerCase();
-    return playerSelection;
-}
-
 //plays a single round of Rock Paper Scissors
 /*
 p: rock vs c:rock, paper, scissors
@@ -58,47 +52,44 @@ function playRound(playerSelection, computerSelection) {
         }
     }
 
-    let eachResult = [message, playerScore, computerScore];
+    let eachResult = [message, playerSelection, playerScore, computerSelection, computerScore];
     return eachResult;
 }
 
+const btns = document.querySelectorAll(".choice-btn");
+const playerChoice = document.querySelector("#player-choice");
+const playerScore = document.querySelector("#player-score");
+const computerChoice = document.querySelector("#computer-choice");
+const computerScore = document.querySelector("#computer-score");
+const singleResult = document.querySelector("#single-result");
+const finalResult = document.querySelector("#final-result");
+const resetBtn = document.querySelector(".reset-btn");
 
-//play a 5 round game that keeps score and reports a winner or loser at the end
-//console.log() to display the results of each round and the winner at the end
-function game(){
-    let results = [];
-    let playerScores = 0;
-    let computerScores = 0;
-    let finalResult = '';
+btns.forEach(btn => btn.addEventListener("click", () => {
+    let result = playRound(btn.textContent, getComputerChoice());
 
-    for(let i=0; i<5; i++) {
-        const playerSelection = getPlayerChoice();
-        const computerSelection = getComputerChoice();
-        results.push(playRound(playerSelection, computerSelection));
-        //console.log(results);
-    }
+    //display each result accordingly
+    singleResult.textContent = result[0];
+    playerChoice.textContent = result[1];
+    playerScore.textContent = parseInt(playerScore.textContent) + result[2];
+    computerChoice.textContent = result[3];
+    computerScore.textContent = parseInt(computerScore.textContent) + result[4];
 
-    //Decide final winner
-    if(results) {
-
-        //total of player's and computer's score
-        for(let j=0; j<5; j++){
-            playerScores = playerScores + results[j][1];
-            computerScores = computerScores + results[j][2];
-        }
-
-        if(playerScores === computerScores) {
-            finalResult = "No winners, it was a tie game";
-        } else if (playerScores > computerScores) {
-            finalResult = "Player won";
-        } else {
-            finalResult = "Computer won";
+    //display final result when one player reaches 5 points
+    if(parseInt(playerScore.textContent) == 5 || parseInt(computerScore.textContent) == 5) {
+        if(parseInt(playerScore.textContent) == 5) {
+            finalResult.textContent = "You win!";
+        } else if (parseInt(computerScore.textContent) == 5) {
+            finalResult.textContent = "You lose!";
         }
     }
 
-    console.log(finalResult);
-    console.log(results);
-
-}
-
-game();
+    resetBtn.addEventListener("click", () => {
+        singleResult.textContent = "";
+        playerChoice.textContent = "";
+        playerScore.textContent = 0;
+        computerChoice.textContent = "";
+        computerScore.textContent = 0;
+        finalResult.textContent = "";
+    })
+}))

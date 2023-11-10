@@ -3,8 +3,55 @@
     <head>
         <meta charset="UTF-8">
         <title>Rock Paper Scissors</title>
+        <style>
+            .container {
+                text-align: center;
+                margin-top: 10rem;
+            }
+            .flex {
+                display: flex;
+                flex-wrap: nowrap;
+                gap: 8rem;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            [class*= "btn"] {
+                width: 75px;
+                padding: .3rem 0 .3rem 0;
+            }
+            #reset {
+                margin-bottom: 1rem;
+            }
+            #final-result {
+                color: red;
+            }
+        </style>
     </head>
     <body>
-        <script src="javascript.js"></script>
+        <div class="container">
+            <h1>Click a button below to start a game</h1>
+            <button class="reset-btn" id="reset">Reset</button>
+            <div>
+                <button class="choice-btn">rock</button>
+                <button class="choice-btn">paper</button>
+                <button class="choice-btn">scissors</button>
+            </div>
+            <div>
+                <div class="flex">
+                    <div>
+                        <p>Player's choice: <span id="player-choice"></span></p>
+                        <p>Player's score: <span id="player-score">0</span></p>
+                    </div>
+                    <div>
+                        <p>Computer's choice: <span id="computer-choice"></span></p>
+                        <p>Computer's score: <span id="computer-score">0</span></p>
+                    </div>
+                </div>
+                <p id="single-result"></p>
+                <p id="final-result"></p>
+            </div>
+        </div>
+
+        <script src="javascript.js" defer></script>
     </body>
 </html>
